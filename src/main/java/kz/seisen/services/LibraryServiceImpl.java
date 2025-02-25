@@ -17,13 +17,13 @@ public class LibraryServiceImpl implements LibraryService {
     }
 
     @Override
-    public String borrowBook(String bookId) {
+    public String borrowBook(Long bookId) {
         String book = bookRepository.findBookById(bookId);
         return "Borrowed: " + book;
     }
 
     @Override
-    public String returnBook(String bookId) {
+    public String returnBook(Long bookId) {
         String book = bookRepository.findBookById(bookId);
         return "Returned: " + book;
     }

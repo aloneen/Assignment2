@@ -16,13 +16,13 @@ public class LibraryServiceAdvancedImpl implements LibraryService {
     }
 
     @Override
-    public String borrowBook(String bookId) {
+    public String borrowBook(Long bookId) {
         String book = bookRepository.findBookById(bookId);
         return "Advanced Borrowed: " + book;
     }
 
     @Override
-    public String returnBook(String bookId) {
+    public String returnBook(Long bookId) {
         String book = bookRepository.findBookById(bookId);
         return "Advanced Returned: " + book;
     }
