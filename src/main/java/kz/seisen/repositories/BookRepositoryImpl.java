@@ -18,17 +18,27 @@ public class BookRepositoryImpl implements BookRepository {
        books.add(new Book(2L, "Mainkraft", "dias"));
        books.add(new Book(3L, "Red book", "dias"));
     }
+
+
+
+
+
     @Override
-    public String findBookById(Long id) {
+    public Book findBookById(Long id) {
         for (Book book : books) {
             if (book.getId().equals(id)) {
-                return book.getTitle();
+                return book;
             }
         }
-        return "Not found";
+        return null;
     }
     @Override
-    public void addBook(Long id, String title, String author) {
-        books.add(new Book(id, title, author));
+    public void addBook(Book book) {
+        books.add(book);
+    }
+
+    @Override
+    public void removeBook(Book book) {
+        books.remove(book);
     }
 }

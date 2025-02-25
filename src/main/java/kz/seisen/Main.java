@@ -1,26 +1,33 @@
 package kz.seisen;
 
-import kz.seisen.beans.LibraryReport;
-import kz.seisen.beans.LibraryStatistics;
+import kz.seisen.beans.LibraryStands;
+import kz.seisen.model.Book;
+import kz.seisen.proxy.*;
 import kz.seisen.beans.LibraryTools;
 import kz.seisen.config.AppConfig;
 import kz.seisen.services.LibraryService;
+import kz.seisen.services.LibraryServiceImpl;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class Main {
     public static void main(String[] args) {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 
-        // Demonstrate services
-        LibraryService defaultService = context.getBean(LibraryService.class);
-        System.out.println(defaultService.borrowBook(1L));
+        // Demonstrate services and repository
+        LibraryService service = context.getBean(LibraryService.class);
 
-//
-//        LibraryService advancedService = context.getBean("advanced", LibraryService.class);
-//        System.out.println(advancedService.returnBook(2L));
+        Book borrowedBook = service.borrowBook(1L);
+
+        service.returnBook(borrowedBook);
+
+        Book book = new Book(1L, "I don't know. Who is joe", "Ilia Topuria");
+        service.saveBook(book);
 
 
-
+        LibraryService premuimService = context.getBean("prem", LibraryService.class);
+        Book premBorrowedBook = premuimService.borrowBook(1L);
+        premuimService.returnBook(premBorrowedBook);
 
 
 
@@ -28,20 +35,12 @@ public class Main {
 
 
         // Demonstrate singleton beans
-        //Eager
-        LibraryStatistics statistics = context.getBean(LibraryStatistics.class);
-        statistics.printStatistics();
+        //Lazy. It's going to show itself only when you called it.
+        LibraryStands libraryStands = context.getBean(LibraryStands.class);
 
 
-        //Lazy
-        LibraryReport report = context.getBean(LibraryReport.class);
-        report.generateReport();
-
-
-        LibraryReport report2 = context.getBean(LibraryReport.class);
-        boolean singletonChecker = report2.equals(report);
-        System.out.println(singletonChecker);
-
+        //Eager. It will show itself first of all (it's constructor)
+        LibraryTools libraryTools = context.getBean(LibraryTools.class);
 
 
 

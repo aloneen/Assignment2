@@ -1,6 +1,9 @@
 package kz.seisen.repositories;
 
+import kz.seisen.model.Book;
+
 public interface BookRepository {
-    String findBookById(Long id);
-    void addBook(Long id, String title, String author);
+    Book findBookById(Long id);
+    void addBook(Book book);
+    void removeBook(Book book);
 }
